@@ -5,6 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Young&Home - 보유 장비</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .equipment-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      padding: 20px;
+    }
+    .equipment-card {
+      background: #ffffff;
+      border: 1px solid #d0e3f0;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      width: 220px;
+      text-align: center;
+      padding: 16px;
+      transition: transform 0.3s ease;
+    }
+    .equipment-card:hover {
+      transform: translateY(-6px);
+    }
+    .equipment-card img {
+      max-width: 160px;
+      height: auto;
+      border-radius: 8px;
+    }
+    .equipment-card a {
+      display: block;
+      color: #3366cc;
+      font-weight: bold;
+      margin: 8px 0;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <header>
