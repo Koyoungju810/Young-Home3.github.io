@@ -2,9 +2,38 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Young&Home - 고객 후기</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .review-section {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .review {
+      border-left: 4px solid #5ec6e8;
+      padding-left: 16px;
+      margin: 16px 0;
+      text-align: left;
+    }
+    .pagination {
+      margin-top: 20px;
+    }
+    .pagination button {
+      background: #0077cc;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      margin: 0 4px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .pagination button.active {
+      background: #004488;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -20,27 +49,86 @@
   </nav>
 
   <section class="section active">
-    <h2>고객 후기</h2>
-    <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">
-      Young&Home을 이용한 고객들의 생생한 후기입니다.<br>
-      만족스러운 서비스를 받은 고객들의 진솔한 이야기를 확인해보세요!
-    </p>
-    <div style="max-width: 800px; margin: 0 auto;">
-      <blockquote style="border-left: 4px solid #5ec6e8; padding-left: 16px; margin-bottom: 20px;">
-        “막힌 하수구가 바로 해결됐어요! 정말 감사합니다.”<br><small>- 이** 고객</small>
-      </blockquote>
-      <blockquote style="border-left: 4px solid #5ec6e8; padding-left: 16px; margin-bottom: 20px;">
-        “배관 내부를 내시경으로 보여주시면서 설명해주셔서 안심됐어요.”<br><small>- 김** 고객</small>
-      </blockquote>
-      <blockquote style="border-left: 4px solid #5ec6e8; padding-left: 16px;">
-        “야간 긴급 출동도 빠르고 친절하게 처리해주셔서 만족합니다.”<br><small>- 박** 고객</small>
-      </blockquote>
+    <div class="review-section">
+      <h2>고객 후기</h2>
+      <p>Young&Home을 이용한 고객들의 생생한 후기입니다.<br>만족스러운 서비스를 받은 고객들의 진솔한 이야기를 확인해보세요!</p>
+      <div id="reviews-container"></div>
+      <div class="pagination" id="pagination"></div>
     </div>
   </section>
 
   <footer>
     <p>&copy; 2025 Young&Home. All rights reserved.</p>
   </footer>
+
+  <script>
+    const reviews = [
+      "막힌 하수구가 바로 해결됐어요! 정말 감사합니다. - 이** 고객",
+      "배관 내부를 내시경으로 보여주시면서 설명해주셔서 안심됐어요. - 김** 고객",
+      "야간 긴급 출동도 빠르고 친절하게 처리해주셔서 만족합니다. - 박** 고객",
+      "가격도 합리적이고 서비스도 훌륭했어요. - 정** 고객",
+      "전문 장비를 갖추고 있어서 신뢰가 갔습니다. - 유** 고객",
+      "상담부터 시공까지 정말 친절했어요. - 최** 고객",
+      "오염이 심했는데 깨끗하게 해결해 주셨어요. - 문** 고객",
+      "빠른 출동에 깔끔한 작업까지 만족합니다. - 한** 고객",
+      "반려동물 때문에 예민했는데도 꼼꼼히 작업해 주셔서 감사했어요. - 노** 고객",
+      "지인 추천으로 알게 됐는데 정말 만족합니다. - 백** 고객",
+      "사진으로 설명해주셔서 이해가 쉬웠어요. - 조** 고객",
+      "앞으로 정기점검도 맡기고 싶어요. - 장** 고객",
+      "전화 응대도 친절하고 예약도 편했습니다. - 남** 고객",
+      "오래된 배관도 정확히 진단해 주셨어요. - 오** 고객",
+      "다음에도 재이용 의사 있습니다! - 방** 고객",
+      "고압세척기 성능이 대단했어요. - 이** 고객",
+      "배수구 냄새 문제도 해결됐습니다. - 서** 고객",
+      "원인을 정확히 파악해 주셔서 좋았어요. - 윤** 고객",
+      "현장에서도 계속 소통해주셔서 신뢰가 갔습니다. - 진** 고객",
+      "공사 전후 비교 설명이 인상 깊었어요. - 홍** 고객",
+      "출장비 포함해도 가격이 부담 없었어요. - 안** 고객",
+      "친구에게도 추천했습니다! - 곽** 고객",
+      "계약 후 유지관리도 꼼꼼히 잘해줘요. - 김** 고객",
+      "비 오는 날에도 와주셔서 감사합니다. - 정** 고객",
+      "현장 체크리스트까지 보여주셔서 감동. - 황** 고객",
+      "예약 시간 정확히 맞춰서 도착해주셨어요. - 백** 고객",
+      "실내 청소까지 신경 써주셨어요. - 강** 고객",
+      "세심하게 배려해주는 서비스였어요. - 신** 고객",
+      "말끔하게 처리해주셔서 재이용할게요. - 하** 고객",
+      "단순 청소가 아니라 점검까지 해주셨어요. - 차** 고객"
+    ];
+
+    const perPage = 3;
+    let currentPage = 1;
+
+    function renderReviews() {
+      const container = document.getElementById('reviews-container');
+      const start = (currentPage - 1) * perPage;
+      const end = start + perPage;
+      const currentReviews = reviews.slice(start, end);
+
+      container.innerHTML = currentReviews.map(text => `<div class="review">“${text.split(' - ')[0]}”<br><small>- ${text.split(' - ')[1]}</small></div>`).join('');
+    }
+
+    function renderPagination() {
+      const pageCount = Math.ceil(reviews.length / perPage);
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (let i = 1; i <= pageCount; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = (i === currentPage) ? 'active' : '';
+        btn.addEventListener('click', () => {
+          currentPage = i;
+          renderReviews();
+          renderPagination();
+        });
+        pagination.appendChild(btn);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderReviews();
+      renderPagination();
+    });
+  </script>
 </body>
 </html>
-
